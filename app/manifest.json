@@ -1,0 +1,21 @@
+{
+  "background": {
+    "persistent": false,
+    "scripts": [ "scripts/background.js" ]
+  },
+  "browser_action": {
+     "default_icon": "images/incident.png"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "description": "Incident",
+  "icons": {
+     "16": "images/incident.png",
+     "48": "images/incident.png",
+     "128": "images/incident.png"
+  },
+  "manifest_version": 2,
+  "name": "Incident",
+  "permissions": [ "cookies", "*://*.intranet/" ],
+  "short_name": "Incident",
+  "version": "0.0.1"
+}

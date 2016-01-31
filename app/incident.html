@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html data-ng-app="incidentExtension">
+  <head>
+    <title>IMs</title>
+    <link rel="stylesheet" href="lib/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="lib/angular-material-data-table/dist/md-data-table.min.css">
+  </head>
+  <body data-ng-controller="incidentCtrl" ng-cloak>
+
+    <div layout="column" flex>
+      <md-toolbar class="md-primary md-whiteframe-6dp">
+        <div class="md-toolbar-tools" layout-align="space-between">
+          <div class="md-title">IMs</div>
+          <md-button class="md-icon-button" aria-label="Settings" ng-click="openRight()">
+            <md-icon md-svg-icon="images/settings.svg"></md-icon>
+          </md-button>
+        </div>
+      </md-toolbar>
+      <div class="md-whiteframe-6dp" layout-margin ng-show="ims.length">
+        <md-table-container>
+          <table md-table>
+            <thead md-head>
+              <tr md-row>
+                <th md-column>IM number</th>
+                <th md-column>Brief description</th>
+                <th md-column>Status</th>
+                <th md-column>Open time</th>
+              </tr>
+            </thead>
+            <tbody md-body>
+              <tr md-row ng-repeat="im in ims">
+                <td md-cell>{{im.IncidentID}}</td>
+                <td md-cell>{{im.BriefDescription}}</td>
+                <td md-cell>{{im.IMTicketStatus}}</td>
+                <td md-cell>{{im.OpenTime | amDifference : null : 'hour' | abs}} hour(s)</td>
+              </tr>
+            </tbody>
+          </table>
+        </md-table-container>
+      </div>
+
+      <div layout="row" layout-align="center center" ng-show="!ims.length && init">
+          <div class="md-whiteframe-6dp" layout-margin>
+            <img src="images/noims.jpg"/>
+          </div>
+      </div>
+
+      <div layout="row" layout-align="center center" ng-show="!init && conf">
+        <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+      </div>
+
+      <div layout="row" layout-align="center center" ng-show="!conf">
+        <md-content layout-margin>
+          <p>Settings not found!<p>
+        </md-content>
+      </div>
+    </div>
+
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+      <md-toolbar class="md-primary md-whiteframe-6dp">
+        <h1 class="md-toolbar-tools">Settings</h1>
+      </md-toolbar>
+      <md-content layout-padding>
+        <div layout-margin>
+          <form data-ng-submit="saveSettings()" >
+            <md-input-container style="width: 100%">
+              <label for="url">URL</label>
+              <input data-ng-model="settings.url" type="text" id="url" name="url" required>
+            </md-input-container>
+            <md-input-container style="width: 100%">
+              <label for="query">Query</label>
+              <input data-ng-model="settings.query" type="text" id="query" name="query" required>
+            </md-input-container>
+            <md-input-container style="width: 50%">
+              <label for="user">User</label>
+              <input data-ng-model="settings.user" type="text" id="user" name="user" required>
+            </md-input-container>
+            <md-input-container style="width: 50%">
+              <label for="password">Password</label>
+              <input data-ng-model="settings.password" type="password" id="password" name="password" required>
+            </md-input-container>
+            <div layout="row">
+              <md-button data-ng-disabled="settings.$invalid" type="submit">Save</md-button>
+              <md-button ng-click="close()" class="md-primary">Cancel</md-button>
+            </div>
+          </form>
+        </div>
+      </md-content>
+    </md-sidenav>
+
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular-resource/angular-resource.min.js"></script>
+    <script src="lib/angular-animate/angular-animate.min.js"></script>
+    <script src="lib/angular-aria/angular-aria.min.js"></script>
+    <script src="lib/angular-material/angular-material.min.js"></script>
+    <script src="lib/angular-material-data-table/dist/md-data-table.min.js"></script>
+    <script src="lib/moment/min/moment.min.js"></script>
+    <script src="lib/angular-moment/angular-moment.min.js"></script>
+    <script src="scripts/incidentSrv.js"></script>
+    <script src="scripts/incidentCtrl.js"></script>
+  </body>
+</html>
